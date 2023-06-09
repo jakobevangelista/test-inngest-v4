@@ -61,12 +61,3 @@ export type EventUnion =
   | BillingPaymentSucceeded
   | BillingSubscriptionStarted
   | BillingSubscriptionCancelled;
-
-// A simple way to pass events without having to re-type the event name
-type CustomEvents<T extends Record<keyof T, any>> = {
-  [V in T[keyof T]]: {
-    [K in keyof T]: T[K] extends V ? T : never;
-  }[keyof T];
-};
-
-export type Events = CustomEvents<EventUnion>;

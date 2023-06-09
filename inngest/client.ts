@@ -1,8 +1,9 @@
-import { Inngest } from "inngest";
+import { Inngest, EventSchemas } from "inngest";
 
-import type { Events } from "./events";
+import { type EventUnion } from "./events";
 
-export const inngest = new Inngest<Events>({
+export const inngest = new Inngest({
   name: "Local Dev",
-  inngestBaseUrl: "http://localhost:9999",
+  schemas: new EventSchemas().fromUnion<EventUnion>(),
+  inngestBaseUrl: process.env.INNGEST_BASE_URL ?? "http://localhost:9999",
 });

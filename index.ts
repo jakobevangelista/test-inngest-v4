@@ -12,19 +12,18 @@ const PORT = 3939;
 
 const app = express();
 
-console.log(functions[0]);
-
 app.use(express.json());
 app.get("/", (req, res) => {
   res.json({ success: true });
 });
 
-app.use(
-  "/api/inngest",
-  serve(inngest, [...functions], {
-    inngestRegisterUrl: "http://localhost:8090/fn/register",
-  })
-);
+const handler = serve(inngest, [...functions], {
+  inngestRegisterUrl:
+    process.env.INNGEST_REGISTER_URL ?? "http://localhost:8090/fn/register",
+  logLevel: "debug",
+});
+
+app.use("/api/inngest", handler);
 
 app.listen(PORT, () => {
   console.log(`✅ Server started on localhost:${PORT}
