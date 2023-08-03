@@ -551,10 +551,10 @@ inherits@2.0.4, inherits@^2.0.3:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-inngest@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/inngest/-/inngest-2.0.0.tgz#dbcab8e0ef7f751ec4234d111ae77b4b43376f68"
-  integrity sha512-F4EENcjCABAzNnb/u4MlBdXpPqUd1AW/Wrko+0wNWB6il0qZDQ49b0FP8Xs49YivsU9yPTcwQs8QYmmwAcxY/Q==
+inngest@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/inngest/-/inngest-2.4.0.tgz#cb4cc4f1317ebf6eba62faea5fd3cfeddb724d30"
+  integrity sha512-C7c3/FX0T4U5rgVb3YcqwGJo2vcL7tHk8Vz0Jq4Zcx86d+c21r4HWJzF2KDcMljndftjPfs4iAOEbhklmXdouQ==
   dependencies:
     buffer "^6.0.3"
     canonicalize "^1.0.8"
