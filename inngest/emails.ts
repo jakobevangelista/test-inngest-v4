@@ -1,7 +1,7 @@
 import { inngest } from "./client";
 
 export const sendWelcomeEmail = inngest.createFunction(
-  { name: "Send Welcome Email" },
+  { id: "send-welcome-email", name: "Send Welcome Email" },
   { event: "app/account.created" },
   async ({ event }) => {
     return {
@@ -12,7 +12,7 @@ export const sendWelcomeEmail = inngest.createFunction(
 );
 
 export const sendUpgradeEmail = inngest.createFunction(
-  { name: "Send Upgrade Email" },
+  { id: "send-upgrade-email", name: "Send Upgrade Email" },
   { event: "billing/subscription.started" },
   async ({ event }) => {
     return {

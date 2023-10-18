@@ -17,8 +17,10 @@ app.get("/", (req, res) => {
   res.json({ success: true });
 });
 
-const handler = serve(inngest, [...functions], {
-  inngestRegisterUrl:
+const handler = serve({
+  client: inngest,
+  functions,
+  baseUrl:
     process.env.INNGEST_REGISTER_URL ?? "http://localhost:8090/fn/register",
   logLevel: "debug",
 });
