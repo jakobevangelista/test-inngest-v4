@@ -4,7 +4,6 @@ import { type EventUnion } from "./events";
 
 export const inngest = new Inngest({
   id: "local-dev",
-  name: "Local Dev",
   schemas: new EventSchemas().fromUnion<EventUnion>(),
-  inngestBaseUrl: process.env.INNGEST_BASE_URL ?? "http://localhost:9999",
+  baseUrl: process.env.INNGEST_EVENT_API_BASE_URL,
 });
