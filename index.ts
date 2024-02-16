@@ -20,9 +20,8 @@ app.get("/", (req, res) => {
 const handler = serve({
   client: inngest,
   functions,
-  baseUrl:
-    process.env.INNGEST_REGISTER_URL ?? "http://localhost:8090/fn/register",
-  logLevel: "debug",
+  baseUrl: process.env.INNGEST_API_BASE_URL,
+  // logLevel: "debug",
 });
 
 app.use("/api/inngest", handler);
