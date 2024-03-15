@@ -1,5 +1,5 @@
 import { inngest } from "../inngest";
-import type { EventUnion, Events } from "../inngest/events";
+import type { EventUnion, EventUnion as Events } from "../inngest/events";
 import casual from "casual";
 
 // We re-use user ids to ensure that some users have multiple events
@@ -32,10 +32,10 @@ const EVENTS: EventNames[] = [
 ];
 
 function createRandomEventData<Evt, T extends EventNames>(
-  name: T
-): Pick<Events[T], "data">["data"] {
+  name: T,
+): Pick<Events, "data">["data"] {
   const billingPlan: keyof typeof BILLING_PLANS = casual.random_element(
-    Object.keys(BILLING_PLANS)
+    Object.keys(BILLING_PLANS),
   );
   switch (name) {
     case "app/account.created":
@@ -68,7 +68,7 @@ function generateRandomTimestampWithinDays(days = 1): number {
   const start = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24 * days);
   const end = new Date();
   return new Date(
-    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+    start.getTime() + Math.random() * (end.getTime() - start.getTime()),
   ).valueOf();
 }
 

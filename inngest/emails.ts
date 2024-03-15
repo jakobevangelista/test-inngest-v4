@@ -3,7 +3,11 @@ import { inngest } from "./client";
 export const sendWelcomeEmail = inngest.createFunction(
   { id: "send-welcome-email", name: "Send Welcome Email" },
   { event: "app/account.created" },
-  async ({ event }) => {
+  async ({ event, events, runId }) => {
+    // console.log(event)
+    console.log(runId)
+    console.log(events)
+
     return {
       success: true,
       message: `welcome email sent to user: ${event.user.id}`,
