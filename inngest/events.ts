@@ -54,10 +54,34 @@ export type BillingSubscriptionCancelled = {
   };
 };
 
+export type TestExamples = {
+  name: "test/examples";
+  data: {};
+};
+
+export type TestWait = {
+  name: "test/wait";
+  data: {};
+};
+
+export type TestFanout = {
+  name: "test/fanout";
+  data: {};
+};
+
+export type TestInvoke = {
+  name: "test/invoke";
+  data: {};
+};
+
 // Scripts use this type externally
 export type EventUnion =
   | AppAccountCreated
   | BillingPaymentFailed
   | BillingPaymentSucceeded
   | BillingSubscriptionStarted
-  | BillingSubscriptionCancelled;
+  | BillingSubscriptionCancelled
+  | TestExamples
+  | TestWait
+  | TestFanout
+  | TestInvoke;

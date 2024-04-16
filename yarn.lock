@@ -144,11 +144,6 @@ acorn@^8.4.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.2.tgz#1b2f25db02af965399b9776b0c2c391276d37c4a"
   integrity sha512-xjIYgE8HBrkpd/sJqOGNspf8uHG+NOHGOw6a/Urj8taM2EXfdNAH2oFcPeIFfsv3+kz/mJrS5VuMqbNLjCa2vw==
 
-acorn@^8.8.2:
-  version "8.11.3"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.11.3.tgz#71e0b14e13a4ec160724b38fb7b0f233b1b81d7a"
-  integrity sha512-Y9rRfJG5jcKOE0CLisYbojUjIrIEE7AGMzA/Sm4BslANhbS+cDMpgBdcPT91oJ7OuJ9hYJBx59RjbhxVnrF8Xg==
-
 ansi-regex@^4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-4.1.1.tgz#164daac87ab2d6f6db3a29875e2d1766582dabed"
@@ -568,10 +563,10 @@ inherits@2.0.4, inherits@^2.0.3:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-inngest@3.13.0:
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/inngest/-/inngest-3.13.0.tgz#a42524212f3c24e1626072246a7f5e189dbb43e7"
-  integrity sha512-LvXLAe7gqPKjvo4D97wuuQy9nsK2gSe0qQcbNSF4WIe3hfavJCsOu1JVcFbQVL9a/ma8mNnbWP4lrUjJvywvTA==
+inngest@^3.16.1-pr-520.6:
+  version "3.16.1-pr-520.6"
+  resolved "https://registry.yarnpkg.com/inngest/-/inngest-3.16.1-pr-520.6.tgz#18d3685720bf5093e072382f008152e9d9114bb0"
+  integrity sha512-DHP+8bODT1Ntp6EZ2bqxqw4tpWGMWr/8m3xXHRxo5nbA2avYz2xjatLF4c2r+fB61CMVRYYIYUyDc0QIY5Evag==
   dependencies:
     "@types/debug" "^4.1.12"
     canonicalize "^1.0.8"
@@ -584,8 +579,6 @@ inngest@3.13.0:
     ms "^2.1.3"
     serialize-error-cjs "^0.1.3"
     strip-ansi "^5.2.0"
-    type-fest "^3.13.1"
-    type-plus "^5.1.0"
     zod "~3.22.3"
 
 ipaddr.js@1.9.1:
@@ -604,11 +597,6 @@ is-binary-path@~2.1.0:
   integrity sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==
   dependencies:
     binary-extensions "^2.0.0"
-
-is-buffer@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-2.0.5.tgz#ebc252e400d22ff8d77fa09888821a24a658c191"
-  integrity sha512-i2R6zNFDwgEHJyQUtJEk0XFi1i0dPFn/oqjK3/vPCcDeJvW5NQ83V8QbicfF1SupOaB0h8ntgBC2YiE7dfyctQ==
 
 is-extglob@^2.1.1:
   version "2.1.1"
@@ -936,15 +924,6 @@ supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-tersify@^3.11.1:
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/tersify/-/tersify-3.12.1.tgz#1aa5a709a02daba24d694f0896fb8a233f482361"
-  integrity sha512-VwzXGHZSOB4T27s4uvh9v8FYrNXyfVz0nBQi28TDwrZoQwT8ZJUp1W2Ff73ekN07stJSb0D+pr6iXeNeFqTI6Q==
-  dependencies:
-    acorn "^8.8.2"
-    is-buffer "^2.0.5"
-    unpartial "^1.0.4"
-
 to-regex-range@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/to-regex-range/-/to-regex-range-5.0.1.tgz#1648c44aae7c8d988a326018ed72f5b4dd0392e4"
@@ -988,11 +967,6 @@ ts-node@^10.9.1:
     v8-compile-cache-lib "^3.0.1"
     yn "3.1.1"
 
-type-fest@^3.13.1:
-  version "3.13.1"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-3.13.1.tgz#bb744c1f0678bea7543a2d1ec24e83e68e8c8706"
-  integrity sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==
-
 type-is@~1.6.18:
   version "1.6.18"
   resolved "https://registry.yarnpkg.com/type-is/-/type-is-1.6.18.tgz#4e552cd05df09467dcbc4ef739de89f2cf37c131"
@@ -1000,14 +974,6 @@ type-is@~1.6.18:
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.24"
-
-type-plus@^5.1.0:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/type-plus/-/type-plus-5.6.0.tgz#5cb1660a6a5c6f84454a3782fdd7a7ade7af085b"
-  integrity sha512-LAIvZzs6mKXYHzwRfGeOuWKsE5jHndwWlLheulMl6eWDSGa1bfZCd0aLQSMgP3HZTbazx/P2UumCqtOz5AMctA==
-  dependencies:
-    tersify "^3.11.1"
-    unpartial "^1.0.4"
 
 typescript@4.8.2:
   version "4.8.2"
@@ -1039,11 +1005,6 @@ unenv@^1.7.4:
     mime "^3.0.0"
     node-fetch-native "^1.4.0"
     pathe "^1.1.1"
-
-unpartial@^1.0.4:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/unpartial/-/unpartial-1.0.5.tgz#ade2b97d4fa309dc6a7fdca6a6fdbf76817fdd7e"
-  integrity sha512-yAqaXcachjgZUnM2yIkf+4KJhmyuoj7stBvlnlZpB15OYVbKnLhgJfmLW7qkpzLHCdsm1bEFvhyN9hCmlZ3uuw==
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"

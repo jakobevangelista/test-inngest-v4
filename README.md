@@ -30,9 +30,9 @@ yarn
 yarn dev
 ```
 
-3. Deploy your functions (use one method)
-
-   - . Use the local UI's "Deploy" button and enter the following URL: `http://host.docker.internal:3939/api/inngest`
+Your functions should now have been deployed if a local dev server is running.
+If not, you can manually deploy:
+   - Use the local UI's "Deploy" button and enter the following URL: `http://host.docker.internal:3939/api/inngest`
 
    - Use a curl comment to trigger the register handshake:
 
@@ -50,4 +50,15 @@ yarn send
 yarn send 500
 # Send a specific event type
 yarn send 30 app/account.created
+```
+
+This can also be appended to the `yarn dev` command to create the server,
+register, and send events in one go.
+
+```shell
+# Send a specific number of events
+yarn dev 500
+
+# Send a specific event type
+yarn dev 1 test/examples
 ```
