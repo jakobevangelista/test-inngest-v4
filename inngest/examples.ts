@@ -10,7 +10,17 @@ export const invokeMe = inngest.createFunction(
       step.run("first step in invoked fn", () => "FIRST INVOKED!"),
       step.run("second step in invoked fn", () => "SECOND INVOKED!"),
     ]);
-  }
+  },
+);
+
+export const batch = inngest.createFunction(
+  { id: "batch", batchEvents: { maxSize: 5, timeout: "5s" } },
+  { event: "test/batch" },
+  async ({ events, step }) => {
+    await step.run("count", () => events.length);
+
+    return { events, success: true };
+  },
 );
 
 export const mix = inngest.createFunction(
@@ -43,7 +53,7 @@ export const mix = inngest.createFunction(
       fourth,
       invokeResult,
     };
-  }
+  },
 );
 
 export const simpleInvoke = inngest.createFunction(
@@ -54,7 +64,7 @@ export const simpleInvoke = inngest.createFunction(
       function: invokeMe,
       data: {},
     });
-  }
+  },
 );
 
 export const simpleStepErrorRecovery = inngest.createFunction(
@@ -68,7 +78,7 @@ export const simpleStepErrorRecovery = inngest.createFunction(
 
       return { message: "I was triggered by an event!", event };
     });
-  }
+  },
 );
 
 export const simpleStepFailRecovery = inngest.createFunction(
@@ -84,7 +94,7 @@ export const simpleStepFailRecovery = inngest.createFunction(
         return `I recovered from the error: ${err.message}!`;
       });
     }
-  }
+  },
 );
 
 export const updatingMidRun = inngest.createFunction(
@@ -100,7 +110,7 @@ export const updatingMidRun = inngest.createFunction(
         return "Second was fine lmao";
       });
     }
-  }
+  },
 );
 
 export const noStepsSuccess = inngest.createFunction(
@@ -108,7 +118,7 @@ export const noStepsSuccess = inngest.createFunction(
   { event: "test/examples" },
   async () => {
     return "No steps, but still successful!";
-  }
+  },
 );
 
 export const noStepsRecovered = inngest.createFunction(
@@ -120,7 +130,7 @@ export const noStepsRecovered = inngest.createFunction(
     }
 
     return "No steps, but recovered!";
-  }
+  },
 );
 
 export const noStepsError = inngest.createFunction(
@@ -128,7 +138,7 @@ export const noStepsError = inngest.createFunction(
   { event: "test/examples" },
   async () => {
     throw new Error("No steps, but failed permanently!");
-  }
+  },
 );
 
 export const simpleSequentialSuccess = inngest.createFunction(
@@ -139,7 +149,7 @@ export const simpleSequentialSuccess = inngest.createFunction(
     const second = await step.run("STEP_ID_2", () => "second!");
 
     return { first, second };
-  }
+  },
 );
 
 export const simpleParallelSuccess = inngest.createFunction(
@@ -152,7 +162,7 @@ export const simpleParallelSuccess = inngest.createFunction(
     ]);
 
     return { first, second };
-  }
+  },
 );
 
 export const parallelRecovery = inngest.createFunction(
@@ -175,7 +185,7 @@ export const parallelRecovery = inngest.createFunction(
     ]);
 
     return { first, second };
-  }
+  },
 );
 
 export const waitError = inngest.createFunction(
@@ -187,7 +197,7 @@ export const waitError = inngest.createFunction(
       if: "invalid(expression__sd-f+*here)",
       timeout: "1h",
     });
-  }
+  },
 );
 
 export const waitSuccess = inngest.createFunction(
@@ -199,7 +209,7 @@ export const waitSuccess = inngest.createFunction(
       event: "test/wait",
       timeout: "1s",
     });
-  }
+  },
 );
 
 export const waitTimeout = inngest.createFunction(
@@ -210,7 +220,7 @@ export const waitTimeout = inngest.createFunction(
       event: "test/wait",
       timeout: "1s",
     });
-  }
+  },
 );
 
 export const sleepThenStep = inngest.createFunction(
@@ -219,7 +229,7 @@ export const sleepThenStep = inngest.createFunction(
   async ({ step }) => {
     await step.sleep("wait-a-sec", "1s");
     await step.run("my-step", () => "I ran after 1 second!");
-  }
+  },
 );
 
 export const sleepThenStepRecovery = inngest.createFunction(
@@ -235,7 +245,7 @@ export const sleepThenStepRecovery = inngest.createFunction(
 
       return "I ran after 1 second!";
     });
-  }
+  },
 );
 
 export const fanoutTarget = inngest.createFunction(
@@ -243,7 +253,7 @@ export const fanoutTarget = inngest.createFunction(
   { event: "test/fanout" },
   async (event) => {
     return { message: "I was triggered by a fanout event!", event };
-  }
+  },
 );
 
 export const fanout = inngest.createFunction(
@@ -254,5 +264,5 @@ export const fanout = inngest.createFunction(
       name: "test/fanout",
       data: {},
     });
-  }
+  },
 );

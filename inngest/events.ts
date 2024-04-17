@@ -74,6 +74,11 @@ export type TestInvoke = {
   data: {};
 };
 
+export type TestBatch = {
+  name: "test/batch";
+  data: {};
+};
+
 // Scripts use this type externally
 export type EventUnion =
   | AppAccountCreated
@@ -84,4 +89,5 @@ export type EventUnion =
   | TestExamples
   | TestWait
   | TestFanout
-  | TestInvoke;
+  | TestInvoke
+  | TestBatch;
