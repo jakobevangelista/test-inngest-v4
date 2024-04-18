@@ -84,6 +84,11 @@ export type TestDebounce = {
   data: {};
 };
 
+export type TestCancel = {
+  name: "test/cancel";
+  data: {};
+};
+
 // Scripts use this type externally
 export type EventUnion =
   | AppAccountCreated
@@ -96,4 +101,5 @@ export type EventUnion =
   | TestFanout
   | TestInvoke
   | TestBatch
-  | TestDebounce;
+  | TestDebounce
+  | TestCancel;

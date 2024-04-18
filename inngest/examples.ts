@@ -199,7 +199,7 @@ export const parallelRecovery = inngest.createFunction(
 );
 
 export const waitError = inngest.createFunction(
-  { id: "wait-error" },
+  { id: "wait-error", cancelOn: [{ event: "test/cancel" }] },
   { event: "test/examples" },
   async ({ step }) => {
     await step.waitForEvent("wait-step-id", {
