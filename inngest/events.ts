@@ -79,6 +79,11 @@ export type TestBatch = {
   data: {};
 };
 
+export type TestDebounce = {
+  name: "test/debounce";
+  data: {};
+};
+
 // Scripts use this type externally
 export type EventUnion =
   | AppAccountCreated
@@ -90,4 +95,5 @@ export type EventUnion =
   | TestWait
   | TestFanout
   | TestInvoke
-  | TestBatch;
+  | TestBatch
+  | TestDebounce;

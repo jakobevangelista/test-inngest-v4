@@ -23,6 +23,16 @@ export const batch = inngest.createFunction(
   },
 );
 
+export const debounce = inngest.createFunction(
+  { id: "debounce", debounce: { period: "3s" } },
+  { event: "test/debounce" },
+  async ({ events, step }) => {
+    await step.run("count", () => events.length);
+
+    return { events, success: true };
+  },
+);
+
 export const mix = inngest.createFunction(
   { id: "mix" },
   { event: "test/examples" },
