@@ -205,7 +205,7 @@ export const waitError = inngest.createFunction(
     await step.waitForEvent("wait-step-id", {
       event: "test/wait",
       if: "invalid(expression__sd-f+*here)",
-      timeout: "1h",
+      timeout: "5m",
     });
   },
 );
