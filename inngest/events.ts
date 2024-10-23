@@ -1,5 +1,5 @@
 export type AppAccountCreated = {
-  name: "app/account.created";
+  name: 'app/account.created';
   data: {
     email: string;
   };
@@ -9,7 +9,7 @@ export type AppAccountCreated = {
 };
 
 export type BillingPaymentFailed = {
-  name: "billing/payment.failed";
+  name: 'billing/payment.failed';
   data: {
     billingPlan: string;
     paymentId: string;
@@ -21,7 +21,7 @@ export type BillingPaymentFailed = {
 };
 
 export type BillingPaymentSucceeded = {
-  name: "billing/payment.succeeded";
+  name: 'billing/payment.succeeded';
   data: {
     billingPlan: string;
     paymentId: string;
@@ -33,7 +33,7 @@ export type BillingPaymentSucceeded = {
 };
 
 export type BillingSubscriptionStarted = {
-  name: "billing/subscription.started";
+  name: 'billing/subscription.started';
   data: {
     billingPlan: string;
     amount: number;
@@ -44,7 +44,7 @@ export type BillingSubscriptionStarted = {
 };
 
 export type BillingSubscriptionCancelled = {
-  name: "billing/subscription.cancelled";
+  name: 'billing/subscription.cancelled';
   data: {
     billingPlan: string;
     amount: number;
@@ -55,38 +55,59 @@ export type BillingSubscriptionCancelled = {
 };
 
 export type TestExamples = {
-  name: "test/examples";
+  name: 'test/examples';
   data: {};
 };
 
 export type TestWait = {
-  name: "test/wait";
+  name: 'test/wait';
   data: {};
 };
 
 export type TestFanout = {
-  name: "test/fanout";
+  name: 'test/fanout';
   data: {};
 };
 
 export type TestInvoke = {
-  name: "test/invoke";
+  name: 'test/invoke';
   data: {};
 };
 
 export type TestBatch = {
-  name: "test/batch";
+  name: 'test/batch';
   data: {};
 };
 
 export type TestDebounce = {
-  name: "test/debounce";
+  name: 'test/debounce';
   data: {};
 };
 
 export type TestCancel = {
-  name: "test/cancel";
+  name: 'test/cancel';
   data: {};
+};
+
+export type TestThrottle = {
+  name: 'test/throttle';
+  data: {};
+};
+
+export type TestCancelable = {
+  name: 'test/cancelable.start';
+  data: {
+    userId: string;
+    randomId: string;
+  };
+};
+
+export type TestCancelableEvent = {
+  name: 'test/cancelable.cancel';
+  data: {
+    userId: string;
+    randomId: string;
+  };
 };
 
 // Scripts use this type externally
@@ -102,4 +123,7 @@ export type EventUnion =
   | TestInvoke
   | TestBatch
   | TestDebounce
-  | TestCancel;
+  | TestCancel
+  | TestThrottle
+  | TestCancelable
+  | TestCancelableEvent;
