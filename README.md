@@ -27,7 +27,7 @@ pnpm install
 2. Start the local server
 
 ```
-pnpm run dev dev
+pnpm run dev
 ```
 
 Your functions should now have been deployed if a local dev server is running.
