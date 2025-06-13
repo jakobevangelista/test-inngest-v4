@@ -312,3 +312,18 @@ export const fanout = inngest.createFunction(
     });
   }
 );
+
+export const singleton = inngest.createFunction(
+  {
+    id: 'singleton',
+    // @ts-expect-error
+    singleton: {
+      key: "event.data.user_id",
+      mode: "skip",
+    },
+  },
+  { event: 'test/examples' },
+  async ({ step }) => {
+    await step.run('first step in singleton fn', () => 'There can only be one');
+  }
+);
