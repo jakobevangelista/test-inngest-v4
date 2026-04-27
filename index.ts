@@ -21,7 +21,6 @@ app.get("/", (req, res) => {
 const handler = serve({
   client: inngest,
   functions,
-  // logLevel: "debug",
 });
 
 app.use("/api/inngest", handler);

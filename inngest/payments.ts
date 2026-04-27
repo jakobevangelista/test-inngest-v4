@@ -1,10 +1,14 @@
 import { setTimeout } from 'node:timers/promises';
 import casual from 'casual';
 import { inngest } from './client';
+import { eventTypes } from './events';
 
 // export const handleTransaction = inngest.createFunction(
-//   { id: 'handle-withdrawal', name: 'Handle withdrawal' },
-//   { event: 'transactions/withdraw.requested' },
+//   {
+//     id: 'handle-withdrawal',
+//     name: 'Handle withdrawal',
+//     triggers: { event: 'transactions/withdraw.requested' },
+//   },
 //   async ({ event, step }) => {
 //     const rowId = await step.run('update-database', async () => {
 //       const row = await db.transactions.upsert(
@@ -67,8 +71,11 @@ import { inngest } from './client';
 // );
 
 export const handleFailedPayments = inngest.createFunction(
-  { id: 'handle-failed-payments', name: 'Handle failed payments' },
-  { event: 'billing/payment.failed' },
+  {
+    id: 'handle-failed-payments',
+    name: 'Handle failed payments',
+    triggers: { event: eventTypes.billingPaymentFailed },
+  },
   async ({ event, step }) => {
     await step.run('Fetch subscription from Stripe', async () => {
       return { customerId: 'cus_1234567890' };
@@ -79,15 +86,18 @@ export const handleFailedPayments = inngest.createFunction(
         throw new Error('Failed to downgrade user');
       }
       return {
-        message: `downgraded user ${event.user.id}`,
+        message: `downgraded user ${event.data.userId}`,
       };
     });
   }
 );
 
 export const sendBillingReceipt = inngest.createFunction(
-  { id: 'send-billing-receipt', name: 'Send billing receipt' },
-  { event: 'billing/payment.succeeded' },
+  {
+    id: 'send-billing-receipt',
+    name: 'Send billing receipt',
+    triggers: { event: eventTypes.billingPaymentSucceeded },
+  },
   async ({ event, step }) => {
     await step.sleep('pause for 5s', '5s');
 
@@ -99,13 +109,16 @@ export const sendBillingReceipt = inngest.createFunction(
 );
 
 export const forwardEvents = inngest.createFunction(
-  { name: 'Events ETL', id: 'billing-etl' },
-  [
-    { event: 'billing/payment.succeeded' },
-    { event: 'billing/payment.failed' },
-    { event: 'billing/subscription.started' },
-    { event: 'billing/subscription.cancelled' },
-  ],
+  {
+    name: 'Events ETL',
+    id: 'billing-etl',
+    triggers: [
+      { event: eventTypes.billingPaymentSucceeded },
+      { event: eventTypes.billingPaymentFailed },
+      { event: eventTypes.billingSubscriptionStarted },
+      { event: eventTypes.billingSubscriptionCancelled },
+    ],
+  },
   async ({}) => {
     return {
       success: true,
@@ -117,9 +130,9 @@ export const sendSlackNotification = inngest.createFunction(
   {
     id: 'send-slack-notifications',
     name: 'Send Slack notification',
+    triggers: { event: eventTypes.billingSubscriptionStarted },
     concurrency: 2,
   },
-  { event: 'billing/subscription.started' },
   async ({ event, step }) => {
     await step.run('sleep', async () => {
       await setTimeout(5000);
@@ -145,9 +158,9 @@ export const sendOfferDiscountForFeedback = inngest.createFunction(
   {
     id: 'send-discount-offer-for-user-feedback',
     name: 'Send discount offer for user feedback',
+    triggers: { event: eventTypes.billingSubscriptionCancelled },
     rateLimit: { limit: 3, period: '10s' },
   },
-  { event: 'billing/subscription.cancelled' },
   async ({ event }) => {
     return {
       success: true,

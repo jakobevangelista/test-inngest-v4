@@ -1,6 +1,6 @@
 import casual from 'casual';
 import { inngest } from '../inngest';
-import type { EventUnion, EventUnion as Events } from '../inngest/events';
+import type { EventUnion } from '../inngest/events';
 
 // We re-use user ids to ensure that some users have multiple events
 const USER_IDS = [
@@ -31,39 +31,43 @@ const EVENTS: EventNames[] = [
   'billing/subscription.cancelled',
 ];
 
-function createRandomEventData<Evt, T extends EventNames>(
-  name: T
-): Pick<Events, 'data'>['data'] {
+function createRandomEventData(name: EventNames): EventUnion['data'] {
   const billingPlan: keyof typeof BILLING_PLANS = casual.random_element(
     Object.keys(BILLING_PLANS)
   );
+  const userId = casual.random_element(USER_IDS);
+
   switch (name) {
     case 'app/account.created':
       return {
         email: casual.email,
+        userId,
       };
     case 'billing/payment.succeeded':
       return {
         billingPlan,
         paymentId: casual.uuid,
         amount: BILLING_PLANS[billingPlan],
+        userId,
       };
     case 'billing/payment.failed':
       return {
         billingPlan,
         paymentId: casual.uuid,
         reason: casual.word,
+        userId,
       };
     case 'billing/subscription.started':
     case 'billing/subscription.cancelled':
       return {
         billingPlan,
         amount: BILLING_PLANS[billingPlan],
+        userId,
       };
     case 'test/cancelable.start':
     case 'test/cancelable.cancel':
       return {
-        userId: casual.random_element(USER_IDS),
+        userId,
         randomId: casual.uuid,
       };
     default:
@@ -80,27 +84,24 @@ function generateRandomTimestampWithinDays(days = 1): number {
 }
 
 function createRandomEvent(eventName?: string) {
-  const name: EventNames = eventName || casual.random_element(EVENTS);
+  const name = (eventName || casual.random_element(EVENTS)) as EventNames;
   const data = createRandomEventData(name);
   return {
     name,
     data,
-    user: {
-      id: casual.random_element(USER_IDS),
-    },
     ts: generateRandomTimestampWithinDays(1),
-  };
+  } as EventUnion;
 }
 
 export function createEvents(n: number, eventName?: string) {
-  const events = [];
+  const events: EventUnion[] = [];
   for (let i = 0; i < n; i++) {
     events.push(createRandomEvent(eventName));
   }
   return events;
 }
 
-export async function send(events: any[]) {
+export async function send(events: EventUnion[]) {
   try {
     await inngest.send(events);
   } catch (err) {

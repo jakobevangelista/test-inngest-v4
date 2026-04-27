@@ -2,8 +2,11 @@ import { inngest } from "./client";
 import { send, createEvents } from "../lib/testEvents";
 
 export const sendTestEvents = inngest.createFunction(
-  { id: "send-test-event", name: "Send test events" },
-  { cron: "*/2 * * * *" },
+  {
+    id: "send-test-event",
+    name: "Send test events",
+    triggers: { cron: "*/2 * * * *" },
+  },
   async ({ step }) => {
     const n = 50;
 

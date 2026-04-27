@@ -1,10 +1,11 @@
 import { inngest } from './client';
+import { eventTypes } from './events';
 
 export const invokeMe = inngest.createFunction(
   {
     id: 'invoke-me',
+    triggers: { event: eventTypes.testInvoke },
   },
-  { event: 'test/invoke' },
   async ({ step }) => {
     return Promise.all([
       step.run('first step in invoked fn', () => 'FIRST INVOKED!'),
@@ -14,8 +15,11 @@ export const invokeMe = inngest.createFunction(
 );
 
 export const batch = inngest.createFunction(
-  { id: 'batch', batchEvents: { maxSize: 5, timeout: '5s' } },
-  { event: 'test/batch' },
+  {
+    id: 'batch',
+    triggers: { event: eventTypes.testBatch },
+    batchEvents: { maxSize: 5, timeout: '5s' },
+  },
   async ({ events, step }) => {
     await step.run('count', () => events.length);
 
@@ -24,8 +28,11 @@ export const batch = inngest.createFunction(
 );
 
 export const debounce = inngest.createFunction(
-  { id: 'debounce', debounce: { period: '3s' } },
-  { event: 'test/debounce' },
+  {
+    id: 'debounce',
+    triggers: { event: eventTypes.testDebounce },
+    debounce: { period: '3s' },
+  },
   async ({ events, step }) => {
     await step.run('count', () => events.length);
 
@@ -36,12 +43,12 @@ export const debounce = inngest.createFunction(
 export const throttle = inngest.createFunction(
   {
     id: 'throttle',
+    triggers: { event: eventTypes.testThrottle },
     throttle: {
       period: '60s',
       limit: 1,
     },
   },
-  { event: 'test/throttle' },
   async ({}) => {
     return {
       success: true,
@@ -50,8 +57,7 @@ export const throttle = inngest.createFunction(
 );
 
 export const mix = inngest.createFunction(
-  { id: 'mix' },
-  { event: 'test/examples' },
+  { id: 'mix', triggers: { event: eventTypes.testExamples } },
   async ({ step, attempt }) => {
     const first = await step.run('first step', () => 'first!');
     const second = await step.run('second step', () => 'second!');
@@ -83,8 +89,7 @@ export const mix = inngest.createFunction(
 );
 
 export const simpleInvoke = inngest.createFunction(
-  { id: 'simple-invoke' },
-  { event: 'test/examples' },
+  { id: 'simple-invoke', triggers: { event: eventTypes.testExamples } },
   async ({ step }) => {
     return step.invoke('invoke me', {
       function: invokeMe,
@@ -94,8 +99,10 @@ export const simpleInvoke = inngest.createFunction(
 );
 
 export const simpleStepErrorRecovery = inngest.createFunction(
-  { id: 'simple-step-error-recovery' },
-  { event: 'test/examples' },
+  {
+    id: 'simple-step-error-recovery',
+    triggers: { event: eventTypes.testExamples },
+  },
   async ({ step, event, attempt }) => {
     return step.run('my-single-step', () => {
       if (attempt < 3) {
@@ -108,8 +115,10 @@ export const simpleStepErrorRecovery = inngest.createFunction(
 );
 
 export const simpleStepFailRecovery = inngest.createFunction(
-  { id: 'simple-step-fail-recovery' },
-  { event: 'test/examples' },
+  {
+    id: 'simple-step-fail-recovery',
+    triggers: { event: eventTypes.testExamples },
+  },
   async ({ step, event }) => {
     try {
       await step.run('my-single-step', () => {
@@ -124,8 +133,7 @@ export const simpleStepFailRecovery = inngest.createFunction(
 );
 
 export const updatingMidRun = inngest.createFunction(
-  { id: 'updating-mid-run' },
-  { event: 'test/examples' },
+  { id: 'updating-mid-run', triggers: { event: eventTypes.testExamples } },
   async ({ step, attempt }) => {
     if (!attempt) {
       await step.run('first???', () => {
@@ -140,16 +148,14 @@ export const updatingMidRun = inngest.createFunction(
 );
 
 export const noStepsSuccess = inngest.createFunction(
-  { id: 'no-steps-success' },
-  { event: 'test/examples' },
+  { id: 'no-steps-success', triggers: { event: eventTypes.testExamples } },
   async () => {
     return 'No steps, but still successful!';
   }
 );
 
 export const noStepsRecovered = inngest.createFunction(
-  { id: 'no-steps-recovered' },
-  { event: 'test/examples' },
+  { id: 'no-steps-recovered', triggers: { event: eventTypes.testExamples } },
   async ({ attempt }) => {
     if (attempt === 0) {
       throw new Error('No steps, but failed first attempt!');
@@ -160,16 +166,17 @@ export const noStepsRecovered = inngest.createFunction(
 );
 
 export const noStepsError = inngest.createFunction(
-  { id: 'no-steps-error' },
-  { event: 'test/examples' },
+  { id: 'no-steps-error', triggers: { event: eventTypes.testExamples } },
   async () => {
     throw new Error('No steps, but failed permanently!');
   }
 );
 
 export const simpleSequentialSuccess = inngest.createFunction(
-  { id: 'simple-sequential-success' },
-  { event: 'test/examples' },
+  {
+    id: 'simple-sequential-success',
+    triggers: { event: eventTypes.testExamples },
+  },
   async ({ step }) => {
     const first = await step.run('STEP_ID_1', () => 'first!');
     const second = await step.run('STEP_ID_2', () => 'second!');
@@ -179,8 +186,10 @@ export const simpleSequentialSuccess = inngest.createFunction(
 );
 
 export const simpleParallelSuccess = inngest.createFunction(
-  { id: 'simple-parallel-success' },
-  { event: 'test/examples' },
+  {
+    id: 'simple-parallel-success',
+    triggers: { event: eventTypes.testExamples },
+  },
   async ({ step }) => {
     const [first, second] = await Promise.all([
       step.run('STEP_ID_1', () => 'first!'),
@@ -192,8 +201,7 @@ export const simpleParallelSuccess = inngest.createFunction(
 );
 
 export const parallelRecovery = inngest.createFunction(
-  { id: 'parallel-recovery' },
-  { event: 'test/examples' },
+  { id: 'parallel-recovery', triggers: { event: eventTypes.testExamples } },
   async ({ step, attempt }) => {
     const run = (id: string) => {
       return step.run(id, async () => {
@@ -215,11 +223,14 @@ export const parallelRecovery = inngest.createFunction(
 );
 
 export const waitError = inngest.createFunction(
-  { id: 'wait-error', cancelOn: [{ event: 'test/cancel' }] },
-  { event: 'test/examples' },
+  {
+    id: 'wait-error',
+    triggers: { event: eventTypes.testExamples },
+    cancelOn: [{ event: eventTypes.testCancel }],
+  },
   async ({ step }) => {
     await step.waitForEvent('wait-step-id', {
-      event: 'test/wait',
+      event: eventTypes.testWait,
       if: 'invalid(expression__sd-f+*here)',
       timeout: '5m',
     });
@@ -229,14 +240,14 @@ export const waitError = inngest.createFunction(
 export const cancelableExpression = inngest.createFunction(
   {
     id: 'cancelable-expression',
+    triggers: { event: eventTypes.testCancelableStart },
     cancelOn: [
       {
-        event: 'test/cancelable.cancel',
+        event: eventTypes.testCancelableCancel,
         if: `event.data.userId > async.data.userId`,
       },
     ],
   },
-  { event: 'test/cancelable.start' },
   async ({ step }) => {
     // Pause it so we can cancel it
     await step.sleep('wait', '5m');
@@ -247,31 +258,28 @@ export const cancelableExpression = inngest.createFunction(
 );
 
 export const waitSuccess = inngest.createFunction(
-  { id: 'wait-success' },
-  { event: 'test/examples' },
+  { id: 'wait-success', triggers: { event: eventTypes.testExamples } },
   async ({ step }) => {
     // TODO Trigger the event
     await step.waitForEvent('wait-step-id', {
-      event: 'test/wait',
+      event: eventTypes.testWait,
       timeout: '1s',
     });
   }
 );
 
 export const waitTimeout = inngest.createFunction(
-  { id: 'wait-timeout' },
-  { event: 'test/examples' },
+  { id: 'wait-timeout', triggers: { event: eventTypes.testExamples } },
   async ({ step }) => {
     await step.waitForEvent('wait-step-id', {
-      event: 'test/wait',
+      event: eventTypes.testWait,
       timeout: '1s',
     });
   }
 );
 
 export const sleepThenStep = inngest.createFunction(
-  { id: 'sleep-then-step' },
-  { event: 'test/examples' },
+  { id: 'sleep-then-step', triggers: { event: eventTypes.testExamples } },
   async ({ step }) => {
     await step.sleep('wait-a-sec', '1s');
     await step.run('my-step', () => 'I ran after 1 second!');
@@ -279,8 +287,10 @@ export const sleepThenStep = inngest.createFunction(
 );
 
 export const sleepThenStepRecovery = inngest.createFunction(
-  { id: 'sleep-then-step-recovery' },
-  { event: 'test/examples' },
+  {
+    id: 'sleep-then-step-recovery',
+    triggers: { event: eventTypes.testExamples },
+  },
   async ({ step, attempt }) => {
     await step.sleep('wait-a-sec', '1s');
 
@@ -295,33 +305,28 @@ export const sleepThenStepRecovery = inngest.createFunction(
 );
 
 export const fanoutTarget = inngest.createFunction(
-  { id: 'fanout-target' },
-  { event: 'test/fanout' },
+  { id: 'fanout-target', triggers: { event: eventTypes.testFanout } },
   async (event) => {
     return { message: 'I was triggered by a fanout event!', event };
   }
 );
 
 export const fanout = inngest.createFunction(
-  { id: 'fanout' },
-  { event: 'test/examples' },
+  { id: 'fanout', triggers: { event: eventTypes.testExamples } },
   async ({ step }) => {
-    await step.sendEvent('fanout-step', {
-      name: 'test/fanout',
-      data: {},
-    });
+    await step.sendEvent('fanout-step', eventTypes.testFanout.create({}));
   }
 );
 
 export const singleton = inngest.createFunction(
   {
     id: 'singleton',
+    triggers: { event: eventTypes.testExamples },
     singleton: {
       key: "event.data.user_id",
       mode: "skip",
     },
   },
-  { event: 'test/examples' },
   async ({ step }) => {
     await step.run('first step in singleton fn', () => 'There can only be one');
   }
