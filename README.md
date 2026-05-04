@@ -62,4 +62,3 @@ pnpm run dev 500
 
 # Send a specific event type
 pnpm run dev 1 test/examples
-```
